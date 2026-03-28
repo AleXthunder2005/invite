@@ -22,13 +22,11 @@ export function GuestForm() {
 
   const [errors, setErrors] = useState<{ [key: number]: string }>({});
   const [submitted, setSubmitted] = useState(false);
-  const [guestCountError, setGuestCountError] = useState(false); // для проверки guestCount
+  const [guestCountError, setGuestCountError] = useState(false);
+  const [networkError, setNetworkError] = useState(''); // 🔥 добавлено
 
-  const validateName = (name: string): boolean => {
-    // Проверка: 3 слова, разделенных пробелами, начинаются с заглавной буквы, только русские буквы
-    // const nameRegex = /^[А-ЯЁ][а-яё]+\s[А-ЯЁ][а-яё]+\s[А-ЯЁ][а-яё]+$/;
-    // return nameRegex.test(name);
-    return name.length > 0;
+  const validateName = (name?: string): boolean => {
+    return !!name && name.trim().length > 0;
   };
 
   const handleGuestsCountChange = (value: number) => {
@@ -39,7 +37,8 @@ export function GuestForm() {
       guestNames: Array(count).fill('').map((_, i) => prev.guestNames[i] || '')
     }));
     setErrors({});
-    setGuestCountError(false); // сброс ошибки при изменении
+    setGuestCountError(false);
+    setNetworkError(''); // 🔥 сброс
   };
 
   const handleNameChange = (index: number, value: string) => {
@@ -61,7 +60,8 @@ export function GuestForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Проверка, что есть хотя бы один гость
+    setNetworkError(''); // 🔥 сброс перед отправкой
+
     if (formData.guestsCount === 0) {
       setGuestCountError(true);
       return;
@@ -69,8 +69,10 @@ export function GuestForm() {
 
     const newErrors: { [key: number]: string } = {};
 
-    // Валидация ФИО: если пустое или невалидное, ошибка
-    formData.guestNames.forEach((name, index) => {
+    const names = [...formData.guestNames];
+    while (names.length < formData.guestsCount) names.push('');
+
+    names.forEach((name, index) => {
       if (!validateName(name)) {
         newErrors[index] = 'Формат: Иванов Иван Иванович';
       }
@@ -81,7 +83,6 @@ export function GuestForm() {
       return;
     }
 
-    // Если чекбокс трансфер скрыт, ставим false
     const transferValue = formData.needsAccommodation ? false : formData.needsTransfer;
 
     const payload = {
@@ -90,8 +91,7 @@ export function GuestForm() {
     };
 
     try {
-      // Отправка данных
-      fetch(
+      await fetch(
           "https://script.google.com/macros/s/AKfycbx7z6mwJdug8I9jO7RD8HprTsQfS7YwHK-ksctrsKLTueiGhJJUdUaEjgvzUY9rOxAS/exec",
           {
             method: "POST",
@@ -103,10 +103,8 @@ export function GuestForm() {
           }
       );
 
-      // Считаем, что запись успешна
       setSubmitted(true);
 
-      // Очистка формы
       setFormData({
         guestsCount: 1,
         guestNames: [],
@@ -122,19 +120,7 @@ export function GuestForm() {
       setTimeout(() => setSubmitted(false), 5000);
 
     } catch {
-      // Игнорируем ошибки из-за CORS
-      setSubmitted(true);
-      setFormData({
-        guestsCount: 1,
-        guestNames: [],
-        needsAccommodation: false,
-        needsTransfer: false,
-        secondDay: false,
-        notes: ''
-      });
-      setErrors({});
-      setGuestCountError(false);
-      setTimeout(() => setSubmitted(false), 5000);
+      setNetworkError('Ошибка сети. Попробуйте еще раз.'); // 🔥 добавлено
     }
   };
 
@@ -228,19 +214,6 @@ export function GuestForm() {
             Необходим ли трансфер до Минска по окончании дня свадьбы?
           </span>
           </label>)}
-
-          <label className="flex items-center gap-3 cursor-pointer">
-            <input
-                type="checkbox"
-                checked={formData.secondDay}
-                onChange={(e) => setFormData(prev => ({ ...prev, secondDay: e.target.checked }))}
-                className="min-w-5 min-h-5 rounded cursor-pointer"
-                style={{ accentColor: 'var(--wedding-accent)' }}
-            />
-            <span style={{ color: 'var(--wedding-text)', fontFamily: 'var(--font-body)' }}>
-            Планируете ли остаться на второй день свадьбы?
-          </span>
-          </label>
         </div>
 
         {/* Дополнительные пометки */}
@@ -291,6 +264,12 @@ export function GuestForm() {
               </>
           )}
         </button>
+
+        {networkError && (
+            <p className="text-sm text-center" style={{ color: '#d4183d' }}>
+              {networkError}
+            </p>
+        )}
       </form>
   );
 }

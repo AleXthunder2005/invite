@@ -183,7 +183,6 @@ export default function App() {
                 Этот день будет наполнен любовью, теплом и радостью, и нам будет особенно приятно провести его в кругу близких и дорогих людей.
               </p>
               
-              {/* День 1 */}
               <div className="mb-10">
                 <h3 
                   className="text-2xl md:text-3xl mb-3 text-center"
@@ -192,7 +191,7 @@ export default function App() {
                     color: 'var(--wedding-dark)'
                   }}
                 >
-                  День 1
+                  Вас ждет
                 </h3>
                 <div className="space-y-6 relative pl-8 md:pl-12">
                   {/* Вертикальная линия */}
@@ -251,44 +250,6 @@ export default function App() {
                       </h4>
                       <p className="text-sm" style={{ color: 'var(--wedding-text)' }}>
                         После церемонии вас ждет праздничный банкет и приятная атмосфера, где мы вместе отметим начало нашей семейной истории.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* День 2 */}
-              <div>
-                <h3 
-                  className="text-2xl md:text-3xl mb-3 text-center"
-                  style={{ 
-                    fontFamily: 'var(--font-wedding)',
-                    color: 'var(--wedding-dark)'
-                  }}
-                >
-                  День 2
-                </h3>
-                <div className="space-y-6 relative pl-8 md:pl-12">
-                  {/* Вертикальная линия */}
-                  <div 
-                    className="absolute left-[15px] md:left-[23px] top-2 bottom-2 w-0.5"
-                    style={{ backgroundColor: 'var(--wedding-accent)' }}
-                  />
-                  
-                  {/* Шашлыки */}
-                  <div className="relative">
-                    <div 
-                      className="absolute -left-8 md:-left-12 w-8 h-8 rounded-full flex items-center justify-center"
-                      style={{ backgroundColor: 'var(--wedding-accent)' }}
-                    >
-                      <Flame size={16} color="white" />
-                    </div>
-                    <div className="bg-white/50 rounded-lg p-4">
-                      <h4 className="font-semibold mb-1" style={{ color: 'var(--wedding-dark)' }}>
-                        Свободная программа
-                      </h4>
-                      <p className="text-sm" style={{ color: 'var(--wedding-text)' }}>
-                        Шашлыки, веселье и отдых на природе в непринужденной атмосфере
                       </p>
                     </div>
                   </div>
@@ -393,7 +354,7 @@ export default function App() {
           </AnimatedSection>
           
           {/* Заключительный текст */}
-          <AnimatedSection delay={0.4}>
+          <AnimatedSection delay={0.2}>
             <p 
               className="text-center text-xl md:text-2xl mb-12 px-4"
               style={{ 
@@ -406,7 +367,7 @@ export default function App() {
           </AnimatedSection>
           
           {/* Футер */}
-          <AnimatedSection delay={0.4}>
+          <AnimatedSection delay={0.2}>
             <footer className="text-center py-4 border-t-2" style={{ borderColor: 'var(--wedding-accent)' }}>
               <div className="flex justify-center mb-4">
                 <Heart size={48} style={{ color: 'var(--wedding-accent)' }} className="animate-pulse" />
