@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { motion, useInView } from 'motion/react';
-import { Heart, Home, MapPin, Wine, Church, Flame, Music, Sparkles } from 'lucide-react';
+import {Heart, Home, MapPin, Wine, Church, Flame, Music, Sparkles, ArrowDown} from 'lucide-react';
 import { WeddingTimer } from './components/WeddingTimer';
 import { GuestForm } from './components/GuestForm';
 import photo from './assets/md.jpg'
@@ -98,59 +98,76 @@ export default function App() {
               <div className="h-px w-20 bg-gradient-to-l from-transparent to-[var(--wedding-accent)]" />
             </div>
           </AnimatedSection>
-          
+
           {/* Дата и место */}
           <AnimatedSection delay={0.2}>
             <div className="bg-white/60 backdrop-blur-md rounded-2xl p-8 md:p-12 shadow-xl mb-8">
-              <h2 
-                className="text-3xl md:text-4xl text-center mb-1"
-                style={{ 
-                  fontFamily: 'var(--font-wedding)',
-                  color: 'var(--wedding-dark)'
-                }}
+              <h2
+                  className="text-3xl md:text-4xl text-center mb-1"
+                  style={{
+                    fontFamily: 'var(--font-wedding)',
+                    color: 'var(--wedding-dark)'
+                  }}
               >
                 Торжество состоится
               </h2>
-              <p 
-                className="text-xl md:text-2xl text-center mb-4"
-                style={{ 
-                  // fontFamily: 'var(--font-wedding)',
-                  color: 'var(--wedding-dark)',
-                  fontWeight: 600
-                }}
+              <p
+                  className="text-xl md:text-2xl text-center mb-4"
+                  style={{
+                    color: 'var(--wedding-dark)',
+                    fontWeight: 600
+                  }}
               >
                 08.08.2026
               </p>
-              <p 
-                className="text-center text-base md:text-lg mb-8"
-                style={{ color: 'var(--wedding-text)' }}
+              <p
+                  className="text-center text-base md:text-lg mb-8"
+                  style={{ color: 'var(--wedding-text)' }}
               >
                 по адресу: Минская область, Пуховичский район, д. Заречаны, 30а
               </p>
-              
-              {/* Иконки */}
-              <div className="flex justify-center gap-6">
+
+              <div className="flex justify-center gap-6 mb-3">
                 <a
-                  href="https://zarechany.by/svadba-v-usadbe"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex flex-col items-center gap-2 p-4 rounded-lg transition-all hover:scale-110"
-                  style={{ color: 'var(--wedding-dark)' }}
+                    href="https://zarechany.by/svadba-v-usadbe"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-2 p-4 rounded-lg transition-all hover:scale-110"
+                    style={{ color: 'var(--wedding-dark)' }}
                 >
                   <Home size={32} />
                   <span className="text-sm">Об усадьбе</span>
                 </a>
                 <a
-                  href="https://www.google.com/maps?q=53.615481,27.579752"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex flex-col items-center gap-2 p-4 rounded-lg transition-all hover:scale-110"
-                  style={{ color: 'var(--wedding-dark)' }}
+                    href="https://www.google.com/maps?q=53.615481,27.579752"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-2 p-4 rounded-lg transition-all hover:scale-110"
+                    style={{ color: 'var(--wedding-dark)' }}
                 >
                   <MapPin size={32} />
                   <span className="text-sm">На карте</span>
                 </a>
               </div>
+
+              {/* 🔥 ДОБАВЛЕННАЯ КНОПКА */}
+              <a
+                  href="#guest-form"
+                  className="block w-full text-sm text-center py-2 px-4 rounded-xl  transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 relative"
+                  style={{
+                    backgroundColor: 'var(--wedding-dark)',
+                    color: 'white',
+                    fontFamily: 'var(--font-body)'
+                  }}
+              >
+                Не забудьте заполнить<br />
+                форму в конце
+
+                <span className="absolute right-4 top-1/2 -translate-y-1/2">
+                  <ArrowDown size={18} />
+                </span>
+              </a>
+
             </div>
           </AnimatedSection>
           
@@ -258,22 +275,6 @@ export default function App() {
             </div>
           </AnimatedSection>
           
-          {/* Таймер */}
-          <AnimatedSection delay={0.2}>
-            <div className="bg-white/60 backdrop-blur-md rounded-2xl p-8 md:p-12 shadow-xl mb-12">
-              <h2 
-                className="text-2xl md:text-3xl text-center mb-2"
-                style={{ 
-                  fontFamily: 'var(--font-wedding)',
-                  color: 'var(--wedding-dark)'
-                }}
-              >
-                До свадьбы осталось
-              </h2>
-              <WeddingTimer />
-            </div>
-          </AnimatedSection>
-          
           {/* Дресс-код */}
           <AnimatedSection delay={0.2}>
             <div className="bg-white/60 backdrop-blur-md rounded-2xl p-8 md:p-12 shadow-xl mb-12">
@@ -339,7 +340,7 @@ export default function App() {
           
           {/* Форма опроса */}
           <AnimatedSection delay={0.2}>
-            <div className="bg-white/60 backdrop-blur-md rounded-2xl p-8 md:p-12 shadow-xl mb-12">
+            <div id={"guest-form"} className="bg-white/60 backdrop-blur-md rounded-2xl p-8 md:p-12 shadow-xl mb-12">
               <h2 
                 className="text-3xl md:text-4xl text-center mb-8"
                 style={{ 
@@ -365,7 +366,23 @@ export default function App() {
               С нетерпением ждем Вас отметить день рождения нашей семьи!
             </p>
           </AnimatedSection>
-          
+
+          {/* Таймер */}
+          <AnimatedSection delay={0.2}>
+            <div className="bg-white/60 backdrop-blur-md rounded-2xl p-8 md:p-12 shadow-xl mb-12">
+              <h2
+                  className="text-2xl md:text-3xl text-center mb-2"
+                  style={{
+                    fontFamily: 'var(--font-wedding)',
+                    color: 'var(--wedding-dark)'
+                  }}
+              >
+                До свадьбы осталось
+              </h2>
+              <WeddingTimer />
+            </div>
+          </AnimatedSection>
+
           {/* Футер */}
           <AnimatedSection delay={0.2}>
             <footer className="text-center py-4 border-t-2" style={{ borderColor: 'var(--wedding-accent)' }}>
